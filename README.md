@@ -1,1 +1,2 @@
 # Oregano8051Programer
+This project is for a very particular application, it consists of the implementation of software for loading programs in the Oregano 8051 Soft-Core through a bootloader implemented by hardware through UART communication.
