@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"        xmlns:local="clr-namespace:Oregano8051Programer"
         mc:Ignorable="d"
         Title="Oregano8051 Programer 0.01" 
         MinHeight="720" 
@@ -318,15 +317,17 @@
                                 Grid.Row="1"
                                 Content="Load File"
                                 MinWidth="60"
-                                Margin="5" Click="Button_Click"
+                                Margin="5"
+                                Command="{Binding LoadHexFileCommand}"
                                     />
 
                             <Button
-                                    Grid.Column="1"
-                                    Grid.Row="1"
-                                    Content="Programming"
-                                    Margin="5" Click="Button_Click_1"
-                                    />
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Content="Programming"
+                                Margin="5"
+                                Command="{Binding ProgramingCommand}"    
+                                />
                         </Grid>
                     </Border>
                     
@@ -345,7 +346,7 @@
 
                     <Border Grid.Row="0" Margin="0,0,0,10">
                         <control:HexEditor 
-                            x:Name="HexEditorV" 
+                            FileName="{Binding HexFileName}"
                             AllowZoom="True" 
                             TypeOfCharacterTable="Ascii"
                             CanInsertAnywhere="False"

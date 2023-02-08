@@ -1,4 +1,5 @@
 ﻿using AlarmViewProyect;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfHexaEditor;
 
 namespace Oregano8051Programer.ViewModel
 {
@@ -34,6 +36,8 @@ namespace Oregano8051Programer.ViewModel
 
 
         #region Properties
+
+        public string? HexFileName { get; set; }
         public ObservableCollection<string>? UartPortList { get; private set; }
         public string? PortSelect { get; set; }
         public int SpeedSelect { get; set; }
@@ -51,12 +55,38 @@ namespace Oregano8051Programer.ViewModel
         private RelayCommand? setUartConf;
         public ICommand SetUartConf => setUartConf ??= new RelayCommand(PerformSetUartConf);
 
+        private RelayCommand? loadHexFileCommand;
+        public ICommand LoadHexFileCommand => loadHexFileCommand ??= new RelayCommand(LoadHexFile);
+
+        private RelayCommand programingCommand;
+        public ICommand ProgramingCommand => programingCommand ??= new RelayCommand(Programing);
+
+
         #endregion
 
         #region Methods
-        private void UpdateUartPort(object sender, RoutedEventArgs e)
+
+        public MainViewModel()
         {
             UartPortList = new(SerialPort.GetPortNames());
+        }
+        private void LoadHexFile(object commandParameter)
+        {
+            var dialog = new OpenFileDialog
+            {
+                FileName = "Alarms", // Default file name
+                DefaultExt = ".hex", // Default file extension
+                Filter = "Text documents (.hex)|*.hex" // Filter files by extension
+            };
+
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                HexFileName = dialog.FileName;
+                //_intelHexFile = new IntelHexFile(dialog.FileName,"00");
+                OnPropertyChanged(nameof(HexFileName));
+            }
+
         }
         private void PerformSetUartConf(object commandParameter)
         {
@@ -74,13 +104,15 @@ namespace Oregano8051Programer.ViewModel
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception " + e.Message);
                 throw;
             }
         }
+
+
+        private void Programing(object commandParameter)
+        {
+        }
+
         #endregion
-
-
-
     }
 }
