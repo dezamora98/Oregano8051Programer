@@ -1,0 +1,10 @@
+﻿<Application x:Class="Oregano8051Programer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Oregano8051Programer"
+             xmlns:viewModel="clr-namespace:Oregano8051Programer.ViewModel"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <viewModel:MainViewModel x:Key="MainViewModel"/>
+    </Application.Resources>
+</Application>

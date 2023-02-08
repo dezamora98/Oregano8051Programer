@@ -1,0 +1,371 @@
+﻿<Window x:Class="Oregano8051Programer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"        xmlns:local="clr-namespace:Oregano8051Programer"
+        mc:Ignorable="d"
+        Title="Oregano8051 Programer 0.01" 
+        MinHeight="720" 
+        MinWidth="800"
+        DataContext="{Binding Source={StaticResource MainViewModel}}"
+        d:DesignHeight="450" 
+        d:DesignWidth="800"
+        >
+
+    <Border>
+        <Grid Margin="10">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*" MaxWidth="250" MinWidth="220"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border  
+                        Grid.Row="0"
+                        Margin="5" 
+                        VerticalAlignment="Top" 
+                        Background="LightGray"
+                        >
+                        
+                        <StackPanel 
+                            Orientation="Vertical"  
+                            VerticalAlignment="Top"
+                            Margin="5"
+                            >
+                            <TextBlock
+                                Text="UART Configuration"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="10" 
+                                FontSize="14" 
+                                FontWeight="Bold"
+                                />
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="Port:"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Margin="5"
+                                    />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    DataContext="{StaticResource MainViewModel}"
+                                    SelectedItem="{Binding PortSelect}"
+                                    ItemsSource="{Binding UartPortList}"
+                                    >
+                                </ComboBox>
+
+                            </Grid>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="Speed:"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Margin="5"
+                                    />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    SelectedItem="{Binding SpeedSelect}"
+                                    >
+                                    <ComboBoxItem Content="1200"/>
+                                    <ComboBoxItem Content="2400"/>
+                                    <ComboBoxItem Content="4800"/>
+                                    <ComboBoxItem Content="9600"/>
+                                    <ComboBoxItem Content="14400"/>
+                                    <ComboBoxItem Content="19200"/>
+                                    <ComboBoxItem Content="57600"/>
+                                    <ComboBoxItem Content="115200"/>
+                                </ComboBox>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="Data:"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Margin="5"
+                                    />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    SelectedItem="{Binding DataSizeSelect}"
+                                    >
+                                    <ComboBoxItem Content="4 bits"/>
+                                    <ComboBoxItem Content="5 bits"/>
+                                    <ComboBoxItem Content="6 bits"/>
+                                    <ComboBoxItem Content="7 bits"/>
+                                    <ComboBoxItem Content="8 bits"/>
+                                </ComboBox>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="Parity:"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Margin="5"
+                                    />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    SelectedItem="{Binding ParitySelect}"
+                                    >
+                                    <ComboBoxItem Content="None"/>
+                                    <ComboBoxItem Content="Odd"/>
+                                    <ComboBoxItem Content="Even"/>
+                                    <ComboBoxItem Content="Mark"/>
+                                    <ComboBoxItem Content="Space"/>
+                                </ComboBox>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="Stop bits:"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Margin="5"
+                                    />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    SelectedItem="{Binding StopBitsSelect}"
+                                    >
+                                    <ComboBoxItem Content="None"/>
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="1.5"/>
+                                    <ComboBoxItem Content="2"/>
+                                </ComboBox>
+                            </Grid>
+
+                            <!--
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.75*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="FLow ontrol:"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Margin="5"
+                                    />
+                                <ComboBox
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    SelectedItem="{Binding FlowCtrlSelect}"
+                                    >
+                                    <ComboBoxItem Content="None"/>
+                                    <ComboBoxItem Content="Xon/Xoff"/>
+                                    <ComboBoxItem Content="Hardware"/>
+                                </ComboBox>
+                            </Grid>
+                            -->
+
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button
+                                    Content="Set"
+                                    Command="{Binding SetUartConf}"
+                                    Grid.Column="0"
+                                    Margin="5"
+                                    />
+                                <Button
+                                    Content="Default"
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    />
+                            </Grid>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Grid.Row="1" 
+                            Margin="5" 
+                            Height="auto" 
+                            Background="LightGray"
+                            >
+                        <Grid Grid.Row="0" Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                    Grid.Row="0"
+                                    Text="Comunication Tester"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="10" FontWeight="Bold" FontSize="14"
+                                    />
+
+                            <Grid 
+                                Grid.Row="1"
+                                Margin="0,0,0,0"
+                                >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button
+                                    Content="Send"
+                                    Grid.Column="0"
+                                    MinWidth="50"
+                                    Margin="5"
+                                />
+                                <TextBox
+                                    Grid.Column="1"
+                                    TextAlignment="Right"
+                                    Background="White"
+                                    Margin="5"
+                                />
+                            </Grid>
+
+                            <TextBlock
+                                    Grid.Row="2"
+                                    Margin="5,0,0,0"
+                                    Text="Data history:"
+                                    />
+
+                            <TextBlock
+                                    Grid.Row="3"
+                                    Margin="5"
+                                    LineStackingStrategy="MaxHeight"
+                                    Background="White"
+                                    MinHeight="80"
+                                    Height="auto"
+                                    />
+
+                            <TextBlock
+                                    Grid.Row="4"
+                                    Margin="5,0,0,0"
+                                    Text="Received:"
+                                    />
+
+                            <TextBlock
+                                    Grid.Row="5"
+                                    Margin="5,5,5,10"
+                                    LineStackingStrategy="MaxHeight"
+                                    Background="White"
+                                    MinHeight="80"
+                                    Height="auto"
+                                    />
+                        </Grid>
+                    </Border>
+
+                    <Border 
+                        Grid.Row="2" 
+                        MinHeight="50" 
+                        Margin="5"
+                        VerticalAlignment="Bottom"
+                        Background="LightGray"
+                        >
+                        <Grid  Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Content="Load File"
+                                MinWidth="60"
+                                Margin="5" Click="Button_Click"
+                                    />
+
+                            <Button
+                                    Grid.Column="1"
+                                    Grid.Row="1"
+                                    Content="Programming"
+                                    Margin="5" Click="Button_Click_1"
+                                    />
+                        </Grid>
+                    </Border>
+                    
+                </Grid>
+            </Border>
+
+            <Border 
+                Grid.Column="1"
+                Margin="5"
+                >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="0.30*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Margin="0,0,0,10">
+                        <control:HexEditor 
+                            x:Name="HexEditorV" 
+                            AllowZoom="True" 
+                            TypeOfCharacterTable="Ascii"
+                            CanInsertAnywhere="False"
+                            Height="auto"
+                            Width="auto"
+                            />
+                    </Border>
+
+                    <Border Grid.Row="1"
+                            Background="#FF656565">
+                        <TextBlock
+                            Margin="10"
+                            FontFamily="Cascadia Code" 
+                            Foreground="#FFEFFFEF" 
+                            Text="hola mundo"
+                            />
+                    </Border>
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
