@@ -275,6 +275,7 @@
                                     <DataGridTextColumn Header="N" Binding="{Binding N}" Width="auto"/>
                                     <DataGridTextColumn Header="Bin" Binding="{Binding Bin}" Width="*"/>
                                     <DataGridTextColumn Header="Hex" Binding="{Binding Hex}" Width="auto"/>
+                                    <DataGridTextColumn Header="Dec" Binding="{Binding Dec}" Width="auto"/>
                                     <DataGridTextColumn Header="ASCII" Binding="{Binding ASCII}" Width="auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -303,6 +304,7 @@
                                     <DataGridTextColumn Header="N" Binding="{Binding N}" Width="auto"/>
                                     <DataGridTextColumn Header="Bin" Binding="{Binding Bin}" Width="*"/>
                                     <DataGridTextColumn Header="Hex" Binding="{Binding Hex}" Width="auto"/>
+                                    <DataGridTextColumn Header="Dec" Binding="{Binding Dec}" Width="auto"/>
                                     <DataGridTextColumn Header="ASCII" Binding="{Binding ASCII}" Width="auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -361,8 +363,6 @@
                             AllowZoom="True" 
                             TypeOfCharacterTable="Ascii"
                             CanInsertAnywhere="False"
-                            Height="auto"
-                            Width="auto"
                             />
                     </Border>
 

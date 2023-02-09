@@ -11,6 +11,7 @@ namespace Oregano8051Programer.Model
         public string? Hex { get; set; }
         public string? Bin { get; set; }
         public string? ASCII { get; set; }
-        public int N { get; set; }
+        public int? Dec { get; set; }
+        public int? N { get; set; }
     }
 }

@@ -172,11 +172,12 @@ namespace Oregano8051Programer.ViewModel
                 serialPort.Write(TxBuffer, 0, 1);
                 HistoryDataSent.Add(new UartFrameData()
                 {
+                    Dec = ByteSend,
                     Bin = Convert.ToString(ByteSend, 2),
                     Hex = ByteSend.ToString("x"),
                     ASCII = Convert.ToChar(ByteSend).ToString(),
                     N = HistoryDataSent.Count() + 1
-                });
+                }) ;
             }
             catch (Exception e)
             {
@@ -201,6 +202,7 @@ namespace Oregano8051Programer.ViewModel
                         return true;
                     }
                 }
+
                 return byte.TryParse(data, out ByteSend);
             }
 
@@ -222,6 +224,7 @@ namespace Oregano8051Programer.ViewModel
                 {
                     ReceivedDataSent.Add(new UartFrameData()
                     {
+                        Dec = b,
                         Bin = Convert.ToString(b, 2),
                         Hex = b.ToString("x"),
                         ASCII = Convert.ToChar(b).ToString(),
