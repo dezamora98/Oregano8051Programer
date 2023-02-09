@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:control="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
         mc:Ignorable="d"
-        Title="Oregano8051 Programer 0.01" 
+        Title="Oregano8051 Programer 0.01 Beta" 
         MinHeight="720" 
         MinWidth="800"
         DataContext="{Binding Source={StaticResource MainViewModel}}"
@@ -65,11 +65,10 @@
                                 <ComboBox
                                     Grid.Column="1"
                                     Margin="5"
-                                    DataContext="{StaticResource MainViewModel}"
-                                    SelectedItem="{Binding PortSelect}"
+                                    SelectedValue="{Binding PortSelect}"
                                     ItemsSource="{Binding UartPortList}"
-                                    >
-                                </ComboBox>
+                                    />
+
 
                             </Grid>
                             
@@ -88,17 +87,10 @@
                                 <ComboBox
                                     Grid.Column="1"
                                     Margin="5"
-                                    SelectedItem="{Binding SpeedSelect}"
-                                    >
-                                    <ComboBoxItem Content="1200"/>
-                                    <ComboBoxItem Content="2400"/>
-                                    <ComboBoxItem Content="4800"/>
-                                    <ComboBoxItem Content="9600"/>
-                                    <ComboBoxItem Content="14400"/>
-                                    <ComboBoxItem Content="19200"/>
-                                    <ComboBoxItem Content="57600"/>
-                                    <ComboBoxItem Content="115200"/>
-                                </ComboBox>
+                                    SelectedValue="{Binding SpeedSelect}"
+                                    ItemsSource="{Binding Baud}"
+                                    />
+
                             </Grid>
 
                             <Grid>
@@ -116,14 +108,10 @@
                                 <ComboBox
                                     Grid.Column="1"
                                     Margin="5"
-                                    SelectedItem="{Binding DataSizeSelect}"
-                                    >
-                                    <ComboBoxItem Content="4 bits"/>
-                                    <ComboBoxItem Content="5 bits"/>
-                                    <ComboBoxItem Content="6 bits"/>
-                                    <ComboBoxItem Content="7 bits"/>
-                                    <ComboBoxItem Content="8 bits"/>
-                                </ComboBox>
+                                    ItemsSource="{Binding NumbBits}"
+                                    SelectedValue="{Binding DataSizeSelect}"
+                                    />
+
                             </Grid>
 
                             <Grid>
@@ -142,13 +130,9 @@
                                     Grid.Column="1"
                                     Margin="5"
                                     SelectedItem="{Binding ParitySelect}"
-                                    >
-                                    <ComboBoxItem Content="None"/>
-                                    <ComboBoxItem Content="Odd"/>
-                                    <ComboBoxItem Content="Even"/>
-                                    <ComboBoxItem Content="Mark"/>
-                                    <ComboBoxItem Content="Space"/>
-                                </ComboBox>
+                                    ItemsSource="{Binding StrParity.Keys}"
+                                    />
+
                             </Grid>
 
                             <Grid>
@@ -166,13 +150,10 @@
                                 <ComboBox
                                     Grid.Column="1"
                                     Margin="5"
-                                    SelectedItem="{Binding StopBitsSelect}"
-                                    >
-                                    <ComboBoxItem Content="None"/>
-                                    <ComboBoxItem Content="1"/>
-                                    <ComboBoxItem Content="1.5"/>
-                                    <ComboBoxItem Content="2"/>
-                                </ComboBox>
+                                    SelectedItem="{Binding StopBitSelect}"
+                                    ItemsSource="{Binding StrStopBits.Keys}"
+                                    />
+
                             </Grid>
 
                             <!--
@@ -215,6 +196,7 @@
                                     Content="Default"
                                     Grid.Column="1"
                                     Margin="5"
+                                    Command="{Binding DefaultUartConfCommand}"
                                     />
                             </Grid>
 
@@ -258,12 +240,14 @@
                                     Grid.Column="0"
                                     MinWidth="50"
                                     Margin="5"
+                                    Command="{Binding SendByteCommand}"
                                 />
                                 <TextBox
                                     Grid.Column="1"
                                     TextAlignment="Right"
                                     Background="White"
                                     Margin="5"
+                                    Text="{Binding DataSend}"
                                 />
                             </Grid>
 
@@ -273,14 +257,27 @@
                                     Text="Data history:"
                                     />
 
-                            <TextBlock
-                                    Grid.Row="3"
-                                    Margin="5"
-                                    LineStackingStrategy="MaxHeight"
-                                    Background="White"
-                                    MinHeight="80"
-                                    Height="auto"
-                                    />
+                            <DataGrid
+                                Grid.Row="3"
+                                Margin="5"
+                                Background="White"
+                                MinHeight="80"
+                                ItemsSource="{Binding HistoryDataSent}"
+                                CanUserReorderColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                AutoGenerateColumns="False"
+                                Height="auto"
+                                GridLinesVisibility="None"
+                                HeadersVisibility="Column"
+                                >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="N" Binding="{Binding N}" Width="auto"/>
+                                    <DataGridTextColumn Header="Bin" Binding="{Binding Bin}" Width="*"/>
+                                    <DataGridTextColumn Header="Hex" Binding="{Binding Hex}" Width="auto"/>
+                                    <DataGridTextColumn Header="ASCII" Binding="{Binding ASCII}" Width="auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
 
                             <TextBlock
                                     Grid.Row="4"
@@ -288,14 +285,28 @@
                                     Text="Received:"
                                     />
 
-                            <TextBlock
-                                    Grid.Row="5"
-                                    Margin="5,5,5,10"
-                                    LineStackingStrategy="MaxHeight"
-                                    Background="White"
-                                    MinHeight="80"
-                                    Height="auto"
-                                    />
+                            <DataGrid
+                                Grid.Row="5"
+                                Margin="5"
+                                Background="White"
+                                MinHeight="80"
+                                ItemsSource="{Binding ReceivedDataSent}"
+                                CanUserReorderColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                AutoGenerateColumns="False"
+                                Height="auto"
+                                GridLinesVisibility="None"
+                                HeadersVisibility="Column"
+                                >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="N" Binding="{Binding N}" Width="auto"/>
+                                    <DataGridTextColumn Header="Bin" Binding="{Binding Bin}" Width="*"/>
+                                    <DataGridTextColumn Header="Hex" Binding="{Binding Hex}" Width="auto"/>
+                                    <DataGridTextColumn Header="ASCII" Binding="{Binding ASCII}" Width="auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            
                         </Grid>
                     </Border>
 
@@ -361,7 +372,7 @@
                             Margin="10"
                             FontFamily="Cascadia Code" 
                             Foreground="#FFEFFFEF" 
-                            Text="hola mundo"
+                            Text="Oreg8051Programer:~$  %% The terminal is not yet implemented %%"
                             />
                     </Border>
 
